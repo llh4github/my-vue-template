@@ -10,6 +10,15 @@ import { visualizer } from "rollup-plugin-visualizer";
 import removeConsole from "vite-plugin-remove-console";
 import themePreprocessorPlugin from "@pureadmin/theme";
 import { genScssMultipleScopeVars } from "../src/layout/theme";
+import compresssionBuild from "rollup-plugin-compression";
+import type { ICompressionOptions } from "rollup-plugin-compression";
+
+// 打包成zip的配置
+const option: ICompressionOptions = {
+  sourceName: `dist`,
+  type: "zip",
+  targetName: `dist`
+};
 
 export function getPluginsList(
   command: string,
@@ -51,6 +60,8 @@ export function getPluginsList(
     // 打包分析
     lifecycle === "report"
       ? visualizer({ open: true, brotliSize: true, filename: "report.html" })
-      : null
+      : null,
+    // dist -> zip
+    compresssionBuild(option)
   ];
 }
