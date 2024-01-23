@@ -21,7 +21,8 @@ export const TokenKey = "authorized-token"
 
 const tokenExpired = (token: string) => {
   const decoded = jwtDecode(token)
-  return decoded.exp
+  // s -> ms
+  return decoded.exp * 1000
 }
 export const setTokenForLogin = (tokeData: LoginResult) => {
   const { accessToken, refreshToken, username } = tokeData
