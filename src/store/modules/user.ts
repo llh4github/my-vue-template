@@ -4,8 +4,8 @@ import { userType } from "./types"
 import { routerArrays } from "@/layout/types"
 import { router, resetRouter } from "@/router"
 import { storageSession } from "@pureadmin/utils"
-import { getLogin, refreshTokenApi } from "@/api/user"
-import { UserResult, RefreshTokenResult } from "@/api/user"
+import { refreshTokenApi } from "@/api/user"
+import { RefreshTokenResult } from "@/api/user"
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags"
 import {
   type DataInfo,
@@ -56,16 +56,14 @@ export const useUserStore = defineStore({
     logOut() {
       const accessToken = getToken().accessToken
       const refreshToken = getToken().refreshToken
-      logoutReq({ accessToken, refreshToken })
-        .then(resp => console.log("fuck", resp))
-        .finally(() => {
-          this.username = ""
-          this.roles = []
-          removeToken()
-          useMultiTagsStoreHook().handleTags("equal", [...routerArrays])
-          resetRouter()
-          router.push("/login")
-        })
+      logoutReq({ accessToken, refreshToken }).finally(() => {
+        this.username = ""
+        this.roles = []
+        removeToken()
+        useMultiTagsStoreHook().handleTags("equal", [...routerArrays])
+        resetRouter()
+        router.push("/login")
+      })
     },
     /** 刷新`token` */
     async handRefreshToken(data) {

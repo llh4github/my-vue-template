@@ -18,6 +18,10 @@ export interface JsonWrapper<T> {
    * 响应消息
    */
   msg: string
+  /**
+   * 响应是否成功
+   */
+  success: boolean
 }
 const baseUrl = (url: string) => {
   return "/api" + url
@@ -59,7 +63,7 @@ const beforeResponseCallback = (response: PureHttpResponse) => {
     return
   }
   const data = response.data
-  if (data.code !== "OK") {
+  if (!data.success) {
     let msgHtml = `
    <strong> 操作出错： ${data.msg}</strong> <br>
     错误代号： ${data.code} <br>
