@@ -65,7 +65,7 @@ const beforeResponseCallback = (response: PureHttpResponse) => {
     错误代号： ${data.code} <br>
     错误模块： ${data.module}<br>
     `
-    if (Object.keys(data.data).length > 0) {
+    if (data.data && Object.keys(data.data).length > 0) {
       msgHtml += "错误说明：" + JSON.stringify(data.data)
     }
     message(msgHtml, {

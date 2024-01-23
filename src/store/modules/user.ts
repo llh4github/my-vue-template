@@ -13,8 +13,9 @@ import {
   removeToken,
   sessionKey,
   setTokenForLogin,
+  getToken,
 } from "@/utils/auth"
-import { LoginResult, loginReq } from "@/api/auth"
+import { LoginResult, loginReq, logoutReq } from "@/api/auth"
 import { JsonWrapper } from "@/api/utils"
 
 export const useUserStore = defineStore({
@@ -53,12 +54,18 @@ export const useUserStore = defineStore({
     },
     /** 前端登出（不调用接口） */
     logOut() {
-      this.username = ""
-      this.roles = []
-      removeToken()
-      useMultiTagsStoreHook().handleTags("equal", [...routerArrays])
-      resetRouter()
-      router.push("/login")
+      const accessToken = getToken().accessToken
+      const refreshToken = getToken().refreshToken
+      logoutReq({ accessToken, refreshToken })
+        .then(resp => console.log("fuck", resp))
+        .finally(() => {
+          this.username = ""
+          this.roles = []
+          removeToken()
+          useMultiTagsStoreHook().handleTags("equal", [...routerArrays])
+          resetRouter()
+          router.push("/login")
+        })
     },
     /** 刷新`token` */
     async handRefreshToken(data) {

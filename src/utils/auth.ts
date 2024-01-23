@@ -27,7 +27,7 @@ const tokenExpired = (token: string) => {
 export const setTokenForLogin = (tokeData: LoginResult) => {
   const { accessToken, refreshToken, username } = tokeData
   const expires = tokenExpired(accessToken)
-  const cookieString = JSON.stringify({ accessToken, expires })
+  const cookieString = JSON.stringify({ accessToken, refreshToken, expires })
   expires > 0
     ? Cookies.set(TokenKey, cookieString, {
         expires: (expires - Date.now()) / 86400000,
