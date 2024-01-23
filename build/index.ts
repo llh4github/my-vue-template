@@ -7,25 +7,25 @@ const warpperEnv = (envConf: Recordable): ViteEnv => {
     VITE_ROUTER_HISTORY: "",
     VITE_CDN: false,
     VITE_HIDE_HOME: "false",
-    VITE_COMPRESSION: "none"
-  };
+    VITE_COMPRESSION: "none",
+  }
 
   for (const envName of Object.keys(envConf)) {
-    let realName = envConf[envName].replace(/\\n/g, "\n");
+    let realName = envConf[envName].replace(/\\n/g, "\n")
     realName =
-      realName === "true" ? true : realName === "false" ? false : realName;
+      realName === "true" ? true : realName === "false" ? false : realName
 
     if (envName === "VITE_PORT") {
-      realName = Number(realName);
+      realName = Number(realName)
     }
-    ret[envName] = realName;
+    ret[envName] = realName
     if (typeof realName === "string") {
-      process.env[envName] = realName;
+      process.env[envName] = realName
     } else if (typeof realName === "object") {
-      process.env[envName] = JSON.stringify(realName);
+      process.env[envName] = JSON.stringify(realName)
     }
   }
-  return ret;
-};
+  return ret
+}
 
-export { warpperEnv };
+export { warpperEnv }

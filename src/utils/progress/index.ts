@@ -1,5 +1,5 @@
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
+import NProgress from "nprogress"
+import "nprogress/nprogress.css"
 
 NProgress.configure({
   // 动画方式
@@ -11,7 +11,7 @@ NProgress.configure({
   // 自动递增间隔
   trickleSpeed: 200,
   // 初始化时的最小百分比
-  minimum: 0.3
-});
+  minimum: 0.3,
+})
 
-export default NProgress;
+export default NProgress

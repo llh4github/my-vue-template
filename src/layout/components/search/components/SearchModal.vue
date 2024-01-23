@@ -1,67 +1,67 @@
 <script setup lang="ts">
-import { match } from "pinyin-pro";
-import { useRouter } from "vue-router";
-import SearchResult from "./SearchResult.vue";
-import SearchFooter from "./SearchFooter.vue";
-import { useNav } from "@/layout/hooks/useNav";
-import { ref, computed, shallowRef } from "vue";
-import { cloneDeep, isAllEmpty } from "@pureadmin/utils";
-import { useDebounceFn, onKeyStroke } from "@vueuse/core";
-import { usePermissionStoreHook } from "@/store/modules/permission";
-import Search from "@iconify-icons/ri/search-line";
+import { match } from "pinyin-pro"
+import { useRouter } from "vue-router"
+import SearchResult from "./SearchResult.vue"
+import SearchFooter from "./SearchFooter.vue"
+import { useNav } from "@/layout/hooks/useNav"
+import { ref, computed, shallowRef } from "vue"
+import { cloneDeep, isAllEmpty } from "@pureadmin/utils"
+import { useDebounceFn, onKeyStroke } from "@vueuse/core"
+import { usePermissionStoreHook } from "@/store/modules/permission"
+import Search from "@iconify-icons/ri/search-line"
 
 interface Props {
   /** 弹窗显隐 */
-  value: boolean;
+  value: boolean
 }
 
 interface Emits {
-  (e: "update:value", val: boolean): void;
+  (e: "update:value", val: boolean): void
 }
 
-const { device } = useNav();
-const emit = defineEmits<Emits>();
-const props = withDefaults(defineProps<Props>(), {});
-const router = useRouter();
+const { device } = useNav()
+const emit = defineEmits<Emits>()
+const props = withDefaults(defineProps<Props>(), {})
+const router = useRouter()
 
-const keyword = ref("");
-const scrollbarRef = ref();
-const resultRef = ref();
-const activePath = ref("");
-const inputRef = ref<HTMLInputElement | null>(null);
-const resultOptions = shallowRef([]);
-const handleSearch = useDebounceFn(search, 300);
+const keyword = ref("")
+const scrollbarRef = ref()
+const resultRef = ref()
+const activePath = ref("")
+const inputRef = ref<HTMLInputElement | null>(null)
+const resultOptions = shallowRef([])
+const handleSearch = useDebounceFn(search, 300)
 
 /** 菜单树形结构 */
 const menusData = computed(() => {
-  return cloneDeep(usePermissionStoreHook().wholeMenus);
-});
+  return cloneDeep(usePermissionStoreHook().wholeMenus)
+})
 
 const show = computed({
   get() {
-    return props.value;
+    return props.value
   },
   set(val: boolean) {
-    emit("update:value", val);
-  }
-});
+    emit("update:value", val)
+  },
+})
 
 /** 将菜单树形结构扁平化为一维数组，用于菜单查询 */
 function flatTree(arr) {
-  const res = [];
+  const res = []
   function deep(arr) {
     arr.forEach(item => {
-      res.push(item);
-      item.children && deep(item.children);
-    });
+      res.push(item)
+      item.children && deep(item.children)
+    })
   }
-  deep(arr);
-  return res;
+  deep(arr)
+  return res
 }
 
 /** 查询 */
 function search() {
-  const flatMenusData = flatTree(menusData.value);
+  const flatMenusData = flatTree(menusData.value)
   resultOptions.value = flatMenusData.filter(menu =>
     keyword.value
       ? menu.meta?.title
@@ -71,73 +71,73 @@ function search() {
           match(
             menu.meta?.title.toLocaleLowerCase(),
             keyword.value.toLocaleLowerCase().trim()
-          )
+          ),
         )
       : false
-  );
+  )
   if (resultOptions.value?.length > 0) {
-    activePath.value = resultOptions.value[0].path;
+    activePath.value = resultOptions.value[0].path
   } else {
-    activePath.value = "";
+    activePath.value = ""
   }
 }
 
 function handleClose() {
-  show.value = false;
+  show.value = false
   /** 延时处理防止用户看到某些操作 */
   setTimeout(() => {
-    resultOptions.value = [];
-    keyword.value = "";
-  }, 200);
+    resultOptions.value = []
+    keyword.value = ""
+  }, 200)
 }
 
 function scrollTo(index) {
-  const scrollTop = resultRef.value.handleScroll(index);
-  scrollbarRef.value.setScrollTop(scrollTop);
+  const scrollTop = resultRef.value.handleScroll(index)
+  scrollbarRef.value.setScrollTop(scrollTop)
 }
 
 /** key up */
 function handleUp() {
-  const { length } = resultOptions.value;
-  if (length === 0) return;
+  const { length } = resultOptions.value
+  if (length === 0) return
   const index = resultOptions.value.findIndex(
     item => item.path === activePath.value
-  );
+  )
   if (index === 0) {
-    activePath.value = resultOptions.value[length - 1].path;
-    scrollTo(resultOptions.value.length - 1);
+    activePath.value = resultOptions.value[length - 1].path
+    scrollTo(resultOptions.value.length - 1)
   } else {
-    activePath.value = resultOptions.value[index - 1].path;
-    scrollTo(index - 1);
+    activePath.value = resultOptions.value[index - 1].path
+    scrollTo(index - 1)
   }
 }
 
 /** key down */
 function handleDown() {
-  const { length } = resultOptions.value;
-  if (length === 0) return;
+  const { length } = resultOptions.value
+  if (length === 0) return
   const index = resultOptions.value.findIndex(
     item => item.path === activePath.value
-  );
+  )
   if (index + 1 === length) {
-    activePath.value = resultOptions.value[0].path;
+    activePath.value = resultOptions.value[0].path
   } else {
-    activePath.value = resultOptions.value[index + 1].path;
+    activePath.value = resultOptions.value[index + 1].path
   }
-  scrollTo(index + 1);
+  scrollTo(index + 1)
 }
 
 /** key enter */
 function handleEnter() {
-  const { length } = resultOptions.value;
-  if (length === 0 || activePath.value === "") return;
-  router.push(activePath.value);
-  handleClose();
+  const { length } = resultOptions.value
+  if (length === 0 || activePath.value === "") return
+  router.push(activePath.value)
+  handleClose()
 }
 
-onKeyStroke("Enter", handleEnter);
-onKeyStroke("ArrowUp", handleUp);
-onKeyStroke("ArrowDown", handleDown);
+onKeyStroke("Enter", handleEnter)
+onKeyStroke("ArrowUp", handleUp)
+onKeyStroke("ArrowDown", handleDown)
 </script>
 
 <template>
@@ -149,7 +149,7 @@ onKeyStroke("ArrowDown", handleDown);
     :width="device === 'mobile' ? '80vw' : '40vw'"
     :before-close="handleClose"
     :style="{
-      borderRadius: '6px'
+      borderRadius: '6px',
     }"
     append-to-body
     @opened="inputRef.focus()"

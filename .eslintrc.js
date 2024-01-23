@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   globals: {
     // Ref sugar (take 2)
@@ -30,14 +30,14 @@ module.exports = {
     defineProps: "readonly",
     defineEmits: "readonly",
     defineExpose: "readonly",
-    withDefaults: "readonly"
+    withDefaults: "readonly",
   },
   extends: [
     "plugin:vue/vue3-essential",
     "eslint:recommended",
     "@vue/typescript/recommended",
     "@vue/prettier",
-    "@vue/eslint-config-typescript"
+    "@vue/eslint-config-typescript",
   ],
   parser: "vue-eslint-parser",
   parserOptions: {
@@ -46,15 +46,15 @@ module.exports = {
     sourceType: "module",
     jsxPragma: "React",
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   overrides: [
     {
       files: ["*.ts", "*.vue"],
       rules: {
-        "no-undef": "off"
-      }
+        "no-undef": "off",
+      },
     },
     {
       files: ["*.vue"],
@@ -64,15 +64,17 @@ module.exports = {
         extraFileExtensions: [".vue"],
         ecmaVersion: "latest",
         ecmaFeatures: {
-          jsx: true
-        }
+          jsx: true,
+        },
       },
       rules: {
-        "no-undef": "off"
-      }
-    }
+        "no-undef": "off",
+      },
+    },
   ],
   rules: {
+    "comma-dangle": ["error", "always-multiline"], // 要求末尾逗号
+    semi: ["error", "never"], // 禁止使用分号代替 ASI (semi)
     "vue/no-v-html": "off",
     "vue/require-default-prop": "off",
     "vue/require-explicit-emits": "off",
@@ -90,31 +92,31 @@ module.exports = {
         html: {
           void: "always",
           normal: "always",
-          component: "always"
+          component: "always",
         },
         svg: "always",
-        math: "always"
-      }
+        math: "always",
+      },
     ],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
         argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_"
-      }
+        varsIgnorePattern: "^_",
+      },
     ],
     "no-unused-vars": [
       "error",
       {
         argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_"
-      }
+        varsIgnorePattern: "^_",
+      },
     ],
     "prettier/prettier": [
       "error",
       {
-        endOfLine: "auto"
-      }
-    ]
-  }
-};
+        endOfLine: "auto",
+      },
+    ],
+  },
+}

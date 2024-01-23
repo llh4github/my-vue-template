@@ -1,17 +1,17 @@
 export interface ListItem {
-  avatar: string;
-  title: string;
-  datetime: string;
-  type: string;
-  description: string;
-  status?: "" | "success" | "warning" | "info" | "danger";
-  extra?: string;
+  avatar: string
+  title: string
+  datetime: string
+  type: string
+  description: string
+  status?: "" | "success" | "warning" | "info" | "danger"
+  extra?: string
 }
 
 export interface TabItem {
-  key: string;
-  name: string;
-  list: ListItem[];
+  key: string
+  name: string
+  list: ListItem[]
 }
 
 export const noticesData: TabItem[] = [
@@ -25,7 +25,7 @@ export const noticesData: TabItem[] = [
         title: "你收到了 12 份新周报",
         datetime: "一年前",
         description: "",
-        type: "1"
+        type: "1",
       },
       {
         avatar:
@@ -33,7 +33,7 @@ export const noticesData: TabItem[] = [
         title: "你推荐的 前端高手 已通过第三轮面试",
         datetime: "一年前",
         description: "",
-        type: "1"
+        type: "1",
       },
       {
         avatar:
@@ -41,7 +41,7 @@ export const noticesData: TabItem[] = [
         title: "这种模板可以区分多种通知类型",
         datetime: "一年前",
         description: "",
-        type: "1"
+        type: "1",
       },
       {
         avatar:
@@ -50,7 +50,7 @@ export const noticesData: TabItem[] = [
           "展示标题内容超过一行后的处理方式，如果内容超过1行将自动截断并支持tooltip显示完整标题。",
         datetime: "一年前",
         description: "",
-        type: "1"
+        type: "1",
       },
       {
         avatar:
@@ -58,7 +58,7 @@ export const noticesData: TabItem[] = [
         title: "左侧图标用于区分不同的类型",
         datetime: "一年前",
         description: "",
-        type: "1"
+        type: "1",
       },
       {
         avatar:
@@ -66,9 +66,9 @@ export const noticesData: TabItem[] = [
         title: "左侧图标用于区分不同的类型",
         datetime: "一年前",
         description: "",
-        type: "1"
-      }
-    ]
+        type: "1",
+      },
+    ],
   },
   {
     key: "2",
@@ -80,7 +80,7 @@ export const noticesData: TabItem[] = [
         title: "李白 评论了你",
         description: "长风破浪会有时,直挂云帆济沧海",
         datetime: "一年前",
-        type: "2"
+        type: "2",
       },
       {
         avatar:
@@ -88,7 +88,7 @@ export const noticesData: TabItem[] = [
         title: "李白 回复了你",
         description: "行路难，行路难，多歧路，今安在。",
         datetime: "一年前",
-        type: "2"
+        type: "2",
       },
       {
         avatar:
@@ -97,9 +97,9 @@ export const noticesData: TabItem[] = [
         description:
           "请将鼠标移动到此处，以便测试超长的消息在此处将如何处理。本例中设置的描述最大行数为2，超过2行的描述内容将被省略并且可以通过tooltip查看完整内容",
         datetime: "一年前",
-        type: "2"
-      }
-    ]
+        type: "2",
+      },
+    ],
   },
   {
     key: "3",
@@ -112,7 +112,7 @@ export const noticesData: TabItem[] = [
         datetime: "",
         extra: "未开始",
         status: "info",
-        type: "3"
+        type: "3",
       },
       {
         avatar: "",
@@ -122,7 +122,7 @@ export const noticesData: TabItem[] = [
         datetime: "",
         extra: "马上到期",
         status: "danger",
-        type: "3"
+        type: "3",
       },
       {
         avatar: "",
@@ -131,7 +131,7 @@ export const noticesData: TabItem[] = [
         datetime: "",
         extra: "已耗时 8 天",
         status: "warning",
-        type: "3"
+        type: "3",
       },
       {
         avatar: "",
@@ -139,8 +139,8 @@ export const noticesData: TabItem[] = [
         description: "vue-pure-admin 版本发布",
         datetime: "",
         extra: "进行中",
-        type: "3"
-      }
-    ]
-  }
-];
+        type: "3",
+      },
+    ],
+  },
+]

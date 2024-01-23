@@ -1,7 +1,7 @@
-import type { App } from "vue";
-import * as echarts from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { PieChart, BarChart, LineChart } from "echarts/charts";
+import type { App } from "vue"
+import * as echarts from "echarts/core"
+import { CanvasRenderer } from "echarts/renderers"
+import { PieChart, BarChart, LineChart } from "echarts/charts"
 import {
   GridComponent,
   TitleComponent,
@@ -10,10 +10,10 @@ import {
   ToolboxComponent,
   TooltipComponent,
   DataZoomComponent,
-  VisualMapComponent
-} from "echarts/components";
+  VisualMapComponent,
+} from "echarts/components"
 
-const { use } = echarts;
+const { use } = echarts
 
 use([
   PieChart,
@@ -27,8 +27,8 @@ use([
   ToolboxComponent,
   TooltipComponent,
   DataZoomComponent,
-  VisualMapComponent
-]);
+  VisualMapComponent,
+])
 
 /**
  * @description 按需引入echarts
@@ -36,7 +36,7 @@ use([
  * @see 温馨提示：必须将 `$echarts` 添加到全局 `globalProperties` ，为了配合 https://pure-admin-utils.netlify.app/hooks/useEcharts/useEcharts.html 使用
  */
 export function useEcharts(app: App) {
-  app.config.globalProperties.$echarts = echarts;
+  app.config.globalProperties.$echarts = echarts
 }
 
-export default echarts;
+export default echarts

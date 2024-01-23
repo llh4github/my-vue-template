@@ -1,5 +1,5 @@
 // 根据角色动态生成路由
-import { MockMethod } from "vite-plugin-mock";
+import { MockMethod } from "vite-plugin-mock"
 
 export default [
   {
@@ -15,9 +15,9 @@ export default [
             roles: ["admin"],
             accessToken: "eyJhbGciOiJIUzUxMiJ9.admin",
             refreshToken: "eyJhbGciOiJIUzUxMiJ9.adminRefresh",
-            expires: "2023/10/30 00:00:00"
-          }
-        };
+            expires: "2023/10/30 00:00:00",
+          },
+        }
       } else {
         return {
           success: true,
@@ -27,10 +27,10 @@ export default [
             roles: ["common"],
             accessToken: "eyJhbGciOiJIUzUxMiJ9.common",
             refreshToken: "eyJhbGciOiJIUzUxMiJ9.commonRefresh",
-            expires: "2023/10/30 00:00:00"
-          }
-        };
+            expires: "2023/10/30 00:00:00",
+          },
+        }
       }
-    }
-  }
-] as MockMethod[];
+    },
+  },
+] as MockMethod[]

@@ -4,14 +4,14 @@ import {
   dialogStore,
   type EventType,
   type ButtonProps,
-  type DialogOptions
-} from "./index";
-import { ref, computed } from "vue";
-import { isFunction } from "@pureadmin/utils";
-import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
-import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
+  type DialogOptions,
+} from "./index"
+import { ref, computed } from "vue"
+import { isFunction } from "@pureadmin/utils"
+import Fullscreen from "@iconify-icons/ri/fullscreen-fill"
+import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill"
 
-const fullscreen = ref(false);
+const fullscreen = ref(false)
 
 const footerButtons = computed(() => {
   return (options: DialogOptions) => {
@@ -24,13 +24,13 @@ const footerButtons = computed(() => {
             bg: true,
             btnClick: ({ dialog: { options, index } }) => {
               const done = () =>
-                closeDialog(options, index, { command: "cancel" });
+                closeDialog(options, index, { command: "cancel" })
               if (options?.beforeCancel && isFunction(options?.beforeCancel)) {
-                options.beforeCancel(done, { options, index });
+                options.beforeCancel(done, { options, index })
               } else {
-                done();
+                done()
               }
-            }
+            },
           },
           {
             label: "确定",
@@ -39,17 +39,17 @@ const footerButtons = computed(() => {
             bg: true,
             btnClick: ({ dialog: { options, index } }) => {
               const done = () =>
-                closeDialog(options, index, { command: "sure" });
+                closeDialog(options, index, { command: "sure" })
               if (options?.beforeSure && isFunction(options?.beforeSure)) {
-                options.beforeSure(done, { options, index });
+                options.beforeSure(done, { options, index })
               } else {
-                done();
+                done()
               }
-            }
-          }
-        ] as Array<ButtonProps>);
-  };
-});
+            },
+          },
+        ] as Array<ButtonProps>)
+  }
+})
 
 const fullscreenClass = computed(() => {
   return [
@@ -57,18 +57,18 @@ const fullscreenClass = computed(() => {
     "el-dialog__close",
     "-translate-x-2",
     "cursor-pointer",
-    "hover:!text-[red]"
-  ];
-});
+    "hover:!text-[red]",
+  ]
+})
 
 function eventsCallBack(
   event: EventType,
   options: DialogOptions,
   index: number
 ) {
-  fullscreen.value = options?.fullscreen ?? false;
+  fullscreen.value = options?.fullscreen ?? false
   if (options?.[event] && isFunction(options?.[event])) {
-    return options?.[event]({ options, index });
+    return options?.[event]({ options, index })
   }
 }
 
@@ -77,8 +77,8 @@ function handleClose(
   index: number,
   args = { command: "close" }
 ) {
-  closeDialog(options, index, args);
-  eventsCallBack("close", options, index);
+  closeDialog(options, index, args)
+  eventsCallBack("close", options, index)
 }
 </script>
 
@@ -145,7 +145,7 @@ function handleClose(
           @click="
             btn.btnClick({
               dialog: { options, index },
-              button: { btn, index: key }
+              button: { btn, index: key },
             })
           "
         >

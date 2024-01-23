@@ -2,7 +2,7 @@
  * @description ⚠️：此文件仅供主题插件使用，请不要在此文件中导出别的工具函数（仅在页面加载前运行）
  */
 
-import { type multipleScopeVarsOptions } from "@pureadmin/theme";
+import { type multipleScopeVarsOptions } from "@pureadmin/theme"
 
 /** 预设主题色 */
 const themeColors = {
@@ -15,7 +15,7 @@ const themeColors = {
     menuText: "rgb(254 254 254 / 65%)",
     sidebarLogo: "#002140",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#4091f7"
+    menuActiveBefore: "#4091f7",
   },
   light: {
     subMenuActiveText: "#409eff",
@@ -26,7 +26,7 @@ const themeColors = {
     menuText: "#7a80b4",
     sidebarLogo: "#fff",
     menuTitleHover: "#000",
-    menuActiveBefore: "#4091f7"
+    menuActiveBefore: "#4091f7",
   },
   dusk: {
     subMenuActiveText: "#fff",
@@ -37,7 +37,7 @@ const themeColors = {
     menuText: "rgb(254 254 254 / 65.1%)",
     sidebarLogo: "#42090c",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#e13c39"
+    menuActiveBefore: "#e13c39",
   },
   volcano: {
     subMenuActiveText: "#fff",
@@ -48,7 +48,7 @@ const themeColors = {
     menuText: "rgb(254 254 254 / 65%)",
     sidebarLogo: "#441708",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#e85f33"
+    menuActiveBefore: "#e85f33",
   },
   yellow: {
     subMenuActiveText: "#d25f00",
@@ -59,7 +59,7 @@ const themeColors = {
     menuText: "rgb(254 254 254 / 65%)",
     sidebarLogo: "#443b05",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#f6da4d"
+    menuActiveBefore: "#f6da4d",
   },
   mingQing: {
     subMenuActiveText: "#fff",
@@ -70,7 +70,7 @@ const themeColors = {
     menuText: "#7a80b4",
     sidebarLogo: "#053434",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#59bfc1"
+    menuActiveBefore: "#59bfc1",
   },
   auroraGreen: {
     subMenuActiveText: "#fff",
@@ -81,7 +81,7 @@ const themeColors = {
     menuText: "#7a80b4",
     sidebarLogo: "#112f21",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#60ac80"
+    menuActiveBefore: "#60ac80",
   },
   pink: {
     subMenuActiveText: "#fff",
@@ -92,7 +92,7 @@ const themeColors = {
     menuText: "#7a80b4",
     sidebarLogo: "#3f0d29",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#d84493"
+    menuActiveBefore: "#d84493",
   },
   saucePurple: {
     subMenuActiveText: "#fff",
@@ -103,15 +103,15 @@ const themeColors = {
     menuText: "#7a80b4",
     sidebarLogo: "#1f0c38",
     menuTitleHover: "#fff",
-    menuActiveBefore: "#693ac9"
-  }
-};
+    menuActiveBefore: "#693ac9",
+  },
+}
 
 /**
  * @description 将预设主题色处理成主题插件所需格式
  */
 export const genScssMultipleScopeVars = (): multipleScopeVarsOptions[] => {
-  const result = [] as multipleScopeVarsOptions[];
+  const result = [] as multipleScopeVarsOptions[]
   Object.keys(themeColors).forEach(key => {
     result.push({
       scopeName: `layout-theme-${key}`,
@@ -125,8 +125,8 @@ export const genScssMultipleScopeVars = (): multipleScopeVarsOptions[] => {
         $sidebarLogo: ${themeColors[key].sidebarLogo} !default;
         $menuTitleHover: ${themeColors[key].menuTitleHover} !default;
         $menuActiveBefore: ${themeColors[key].menuActiveBefore} !default;
-      `
-    } as multipleScopeVarsOptions);
-  });
-  return result;
-};
+      `,
+    } as multipleScopeVarsOptions)
+  })
+  return result
+}

@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { useResizeObserver } from "@vueuse/core";
-import { useEpThemeStoreHook } from "@/store/modules/epTheme";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { ref, computed, getCurrentInstance, onMounted } from "vue";
-import enterOutlined from "@/assets/svg/enter_outlined.svg?component";
-import Bookmark2Line from "@iconify-icons/ri/bookmark-2-line";
+import { useResizeObserver } from "@vueuse/core"
+import { useEpThemeStoreHook } from "@/store/modules/epTheme"
+import { useRenderIcon } from "@/components/ReIcon/src/hooks"
+import { ref, computed, getCurrentInstance, onMounted } from "vue"
+import enterOutlined from "@/assets/svg/enter_outlined.svg?component"
+import Bookmark2Line from "@iconify-icons/ri/bookmark-2-line"
 
 interface optionsItem {
-  path: string;
+  path: string
   meta?: {
-    icon?: string;
-    title?: string;
-  };
+    icon?: string
+    title?: string
+  }
 }
 
 interface Props {
-  value: string;
-  options: Array<optionsItem>;
+  value: string
+  options: Array<optionsItem>
 }
 
 interface Emits {
-  (e: "update:value", val: string): void;
-  (e: "enter"): void;
+  (e: "update:value", val: string): void
+  (e: "enter"): void
 }
 
-const resultRef = ref();
-const innerHeight = ref();
-const props = withDefaults(defineProps<Props>(), {});
-const emit = defineEmits<Emits>();
-const instance = getCurrentInstance()!;
+const resultRef = ref()
+const innerHeight = ref()
+const props = withDefaults(defineProps<Props>(), {})
+const emit = defineEmits<Emits>()
+const instance = getCurrentInstance()!
 
 const itemStyle = computed(() => {
   return item => {
@@ -36,51 +36,51 @@ const itemStyle = computed(() => {
       background:
         item?.path === active.value ? useEpThemeStoreHook().epThemeColor : "",
       color: item.path === active.value ? "#fff" : "",
-      fontSize: item.path === active.value ? "16px" : "14px"
-    };
-  };
-});
+      fontSize: item.path === active.value ? "16px" : "14px",
+    }
+  }
+})
 
 const active = computed({
   get() {
-    return props.value;
+    return props.value
   },
   set(val: string) {
-    emit("update:value", val);
-  }
-});
+    emit("update:value", val)
+  },
+})
 
 /** 鼠标移入 */
 async function handleMouse(item) {
-  active.value = item.path;
+  active.value = item.path
 }
 
 function handleTo() {
-  emit("enter");
+  emit("enter")
 }
 
 function resizeResult() {
   // el-scrollbar max-height="calc(90vh - 140px)"
-  innerHeight.value = window.innerHeight - window.innerHeight / 10 - 140;
+  innerHeight.value = window.innerHeight - window.innerHeight / 10 - 140
 }
 
 useResizeObserver(resultRef, () => {
-  resizeResult();
-});
+  resizeResult()
+})
 
 function handleScroll(index: number) {
-  const curInstance = instance?.proxy?.$refs[`resultItemRef${index}`];
-  if (!curInstance) return 0;
-  const curRef = curInstance[0] as ElRef;
-  const scrollTop = curRef.offsetTop + 128; // 128 两个result-item（56px+56px=112px）高度加上下margin（8px+8px=16px）
-  return scrollTop > innerHeight.value ? scrollTop - innerHeight.value : 0;
+  const curInstance = instance?.proxy?.$refs[`resultItemRef${index}`]
+  if (!curInstance) return 0
+  const curRef = curInstance[0] as ElRef
+  const scrollTop = curRef.offsetTop + 128 // 128 两个result-item（56px+56px=112px）高度加上下margin（8px+8px=16px）
+  return scrollTop > innerHeight.value ? scrollTop - innerHeight.value : 0
 }
 
 onMounted(() => {
-  resizeResult();
-});
+  resizeResult()
+})
 
-defineExpose({ handleScroll });
+defineExpose({ handleScroll })
 </script>
 
 <template>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Search from "./search/index.vue";
-import Notice from "./notice/index.vue";
-import mixNav from "./sidebar/mixNav.vue";
-import { useNav } from "@/layout/hooks/useNav";
-import Breadcrumb from "./sidebar/breadCrumb.vue";
-import topCollapse from "./sidebar/topCollapse.vue";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
-import Setting from "@iconify-icons/ri/settings-3-line";
+import Search from "./search/index.vue"
+import Notice from "./notice/index.vue"
+import mixNav from "./sidebar/mixNav.vue"
+import { useNav } from "@/layout/hooks/useNav"
+import Breadcrumb from "./sidebar/breadCrumb.vue"
+import topCollapse from "./sidebar/topCollapse.vue"
+import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line"
+import Setting from "@iconify-icons/ri/settings-3-line"
 
 const {
   layout,
@@ -17,8 +17,8 @@ const {
   username,
   userAvatar,
   avatarsStyle,
-  toggleSideBar
-} = useNav();
+  toggleSideBar,
+} = useNav()
 </script>
 
 <template>

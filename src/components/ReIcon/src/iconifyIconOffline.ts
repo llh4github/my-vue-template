@@ -1,5 +1,5 @@
-import { h, defineComponent } from "vue";
-import { Icon as IconifyIcon, addIcon } from "@iconify/vue/dist/offline";
+import { h, defineComponent } from "vue"
+import { Icon as IconifyIcon, addIcon } from "@iconify/vue/dist/offline"
 
 // Iconify Icon在Vue里本地使用（用于内网环境）https://docs.iconify.design/icon-components/vue/offline.html
 export default defineComponent({
@@ -7,12 +7,12 @@ export default defineComponent({
   components: { IconifyIcon },
   props: {
     icon: {
-      default: null
-    }
+      default: null,
+    },
   },
   render() {
-    if (typeof this.icon === "object") addIcon(this.icon, this.icon);
-    const attrs = this.$attrs;
+    if (typeof this.icon === "object") addIcon(this.icon, this.icon)
+    const attrs = this.$attrs
     return h(
       IconifyIcon,
       {
@@ -20,11 +20,11 @@ export default defineComponent({
         style: attrs?.style
           ? Object.assign(attrs.style, { outline: "none" })
           : { outline: "none" },
-        ...attrs
+        ...attrs,
       },
       {
-        default: () => []
-      }
-    );
-  }
-});
+        default: () => [],
+      },
+    )
+  },
+})

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import extraIcon from "./extraIcon.vue";
-import Search from "../search/index.vue";
-import Notice from "../notice/index.vue";
-import { isAllEmpty } from "@pureadmin/utils";
-import { useNav } from "@/layout/hooks/useNav";
-import { ref, toRaw, watch, onMounted, nextTick } from "vue";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { getParentPaths, findRouteByPath } from "@/router/utils";
-import { usePermissionStoreHook } from "@/store/modules/permission";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
-import Setting from "@iconify-icons/ri/settings-3-line";
+import extraIcon from "./extraIcon.vue"
+import Search from "../search/index.vue"
+import Notice from "../notice/index.vue"
+import { isAllEmpty } from "@pureadmin/utils"
+import { useNav } from "@/layout/hooks/useNav"
+import { ref, toRaw, watch, onMounted, nextTick } from "vue"
+import { useRenderIcon } from "@/components/ReIcon/src/hooks"
+import { getParentPaths, findRouteByPath } from "@/router/utils"
+import { usePermissionStoreHook } from "@/store/modules/permission"
+import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line"
+import Setting from "@iconify-icons/ri/settings-3-line"
 
-const menuRef = ref();
-const defaultActive = ref(null);
+const menuRef = ref()
+const defaultActive = ref(null)
 
 const {
   route,
@@ -23,32 +23,32 @@ const {
   username,
   userAvatar,
   getDivStyle,
-  avatarsStyle
-} = useNav();
+  avatarsStyle,
+} = useNav()
 
 function getDefaultActive(routePath) {
-  const wholeMenus = usePermissionStoreHook().wholeMenus;
+  const wholeMenus = usePermissionStoreHook().wholeMenus
   /** 当前路由的父级路径 */
-  const parentRoutes = getParentPaths(routePath, wholeMenus)[0];
+  const parentRoutes = getParentPaths(routePath, wholeMenus)[0]
   defaultActive.value = !isAllEmpty(route.meta?.activePath)
     ? route.meta.activePath
-    : findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path;
+    : findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path
 }
 
 onMounted(() => {
-  getDefaultActive(route.path);
-});
+  getDefaultActive(route.path)
+})
 
 nextTick(() => {
-  menuRef.value?.handleResize();
-});
+  menuRef.value?.handleResize()
+})
 
 watch(
   () => [route.path, usePermissionStoreHook().wholeMenus],
   () => {
-    getDefaultActive(route.path);
-  }
-);
+    getDefaultActive(route.path)
+  },
+)
 </script>
 
 <template>

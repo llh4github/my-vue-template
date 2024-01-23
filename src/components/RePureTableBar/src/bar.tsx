@@ -1,66 +1,66 @@
-import { useEpThemeStoreHook } from "@/store/modules/epTheme";
-import { defineComponent, ref, computed, type PropType, nextTick } from "vue";
+import { useEpThemeStoreHook } from "@/store/modules/epTheme"
+import { defineComponent, ref, computed, type PropType, nextTick } from "vue"
 import {
   delay,
   cloneDeep,
   isBoolean,
   isFunction,
-  getKeyList
-} from "@pureadmin/utils";
+  getKeyList,
+} from "@pureadmin/utils"
 
-import Sortable from "sortablejs";
-import DragIcon from "./svg/drag.svg?component";
-import ExpandIcon from "./svg/expand.svg?component";
-import RefreshIcon from "./svg/refresh.svg?component";
-import SettingIcon from "./svg/settings.svg?component";
-import CollapseIcon from "./svg/collapse.svg?component";
+import Sortable from "sortablejs"
+import DragIcon from "./svg/drag.svg?component"
+import ExpandIcon from "./svg/expand.svg?component"
+import RefreshIcon from "./svg/refresh.svg?component"
+import SettingIcon from "./svg/settings.svg?component"
+import CollapseIcon from "./svg/collapse.svg?component"
 
 const props = {
   /** 头部最左边的标题 */
   title: {
     type: String,
-    default: "列表"
+    default: "列表",
   },
   /** 对于树形表格，如果想启用展开和折叠功能，传入当前表格的ref即可 */
   tableRef: {
-    type: Object as PropType<any>
+    type: Object as PropType<any>,
   },
   /** 需要展示的列 */
   columns: {
     type: Array as PropType<TableColumnList>,
-    default: () => []
-  }
-};
+    default: () => [],
+  },
+}
 
 export default defineComponent({
   name: "PureTableBar",
   props,
   emits: ["refresh"],
   setup(props, { emit, slots, attrs }) {
-    const buttonRef = ref();
-    const size = ref("default");
-    const isExpandAll = ref(true);
-    const loading = ref(false);
-    const checkAll = ref(true);
-    const isIndeterminate = ref(false);
+    const buttonRef = ref()
+    const size = ref("default")
+    const isExpandAll = ref(true)
+    const loading = ref(false)
+    const checkAll = ref(true)
+    const isIndeterminate = ref(false)
     const filterColumns = cloneDeep(props?.columns).filter(column =>
       isBoolean(column?.hide)
         ? !column.hide
         : !(isFunction(column?.hide) && column?.hide())
-    );
-    let checkColumnList = getKeyList(cloneDeep(props?.columns), "label");
-    const checkedColumns = ref(getKeyList(cloneDeep(filterColumns), "label"));
-    const dynamicColumns = ref(cloneDeep(props?.columns));
+    )
+    let checkColumnList = getKeyList(cloneDeep(props?.columns), "label")
+    const checkedColumns = ref(getKeyList(cloneDeep(filterColumns), "label"))
+    const dynamicColumns = ref(cloneDeep(props?.columns))
 
     const getDropdownItemStyle = computed(() => {
       return s => {
         return {
           background:
             s === size.value ? useEpThemeStoreHook().epThemeColor : "",
-          color: s === size.value ? "#fff" : "var(--el-text-color-primary)"
-        };
-      };
-    });
+          color: s === size.value ? "#fff" : "var(--el-text-color-primary)",
+        }
+      }
+    })
 
     const iconClass = computed(() => {
       return [
@@ -69,9 +69,9 @@ export default defineComponent({
         "duration-100",
         "hover:!text-primary",
         "cursor-pointer",
-        "outline-none"
-      ];
-    });
+        "outline-none",
+      ]
+    })
 
     const topClass = computed(() => {
       return [
@@ -82,56 +82,56 @@ export default defineComponent({
         "border-b-[1px]",
         "border-solid",
         "border-[#dcdfe6]",
-        "dark:border-[#303030]"
-      ];
-    });
+        "dark:border-[#303030]",
+      ]
+    })
 
     function onReFresh() {
-      loading.value = true;
-      emit("refresh");
-      delay(500).then(() => (loading.value = false));
+      loading.value = true
+      emit("refresh")
+      delay(500).then(() => (loading.value = false))
     }
 
     function onExpand() {
-      isExpandAll.value = !isExpandAll.value;
-      toggleRowExpansionAll(props.tableRef.data, isExpandAll.value);
+      isExpandAll.value = !isExpandAll.value
+      toggleRowExpansionAll(props.tableRef.data, isExpandAll.value)
     }
 
     function toggleRowExpansionAll(data, isExpansion) {
       data.forEach(item => {
-        props.tableRef.toggleRowExpansion(item, isExpansion);
+        props.tableRef.toggleRowExpansion(item, isExpansion)
         if (item.children !== undefined && item.children !== null) {
-          toggleRowExpansionAll(item.children, isExpansion);
+          toggleRowExpansionAll(item.children, isExpansion)
         }
-      });
+      })
     }
 
     function handleCheckAllChange(val: boolean) {
-      checkedColumns.value = val ? checkColumnList : [];
-      isIndeterminate.value = false;
+      checkedColumns.value = val ? checkColumnList : []
+      isIndeterminate.value = false
       dynamicColumns.value.map(column =>
         val ? (column.hide = false) : (column.hide = true)
-      );
+      )
     }
 
     function handleCheckedColumnsChange(value: string[]) {
-      const checkedCount = value.length;
-      checkAll.value = checkedCount === checkColumnList.length;
+      const checkedCount = value.length
+      checkAll.value = checkedCount === checkColumnList.length
       isIndeterminate.value =
-        checkedCount > 0 && checkedCount < checkColumnList.length;
+        checkedCount > 0 && checkedCount < checkColumnList.length
     }
 
     function handleCheckColumnListChange(val: boolean, label: string) {
-      dynamicColumns.value.filter(item => item.label === label)[0].hide = !val;
+      dynamicColumns.value.filter(item => item.label === label)[0].hide = !val
     }
 
     async function onReset() {
-      checkAll.value = true;
-      isIndeterminate.value = false;
-      dynamicColumns.value = cloneDeep(props?.columns);
-      checkColumnList = [];
-      checkColumnList = await getKeyList(cloneDeep(props?.columns), "label");
-      checkedColumns.value = getKeyList(cloneDeep(filterColumns), "label");
+      checkAll.value = true
+      isIndeterminate.value = false
+      dynamicColumns.value = cloneDeep(props?.columns)
+      checkColumnList = []
+      checkColumnList = await getKeyList(cloneDeep(props?.columns), "label")
+      checkedColumns.value = getKeyList(cloneDeep(filterColumns), "label")
     }
 
     const dropdown = {
@@ -156,49 +156,49 @@ export default defineComponent({
             紧凑
           </el-dropdown-item>
         </el-dropdown-menu>
-      )
-    };
+      ),
+    }
 
     /** 列展示拖拽排序 */
     const rowDrop = (event: { preventDefault: () => void }) => {
-      event.preventDefault();
+      event.preventDefault()
       nextTick(() => {
         const wrapper: HTMLElement = document.querySelector(
           ".el-checkbox-group>div"
-        );
+        )
         Sortable.create(wrapper, {
           animation: 300,
           handle: ".drag-btn",
           onEnd: ({ newIndex, oldIndex, item }) => {
-            const targetThElem = item;
-            const wrapperElem = targetThElem.parentNode as HTMLElement;
-            const oldColumn = dynamicColumns.value[oldIndex];
-            const newColumn = dynamicColumns.value[newIndex];
+            const targetThElem = item
+            const wrapperElem = targetThElem.parentNode as HTMLElement
+            const oldColumn = dynamicColumns.value[oldIndex]
+            const newColumn = dynamicColumns.value[newIndex]
             if (oldColumn?.fixed || newColumn?.fixed) {
               // 当前列存在fixed属性 则不可拖拽
-              const oldThElem = wrapperElem.children[oldIndex] as HTMLElement;
+              const oldThElem = wrapperElem.children[oldIndex] as HTMLElement
               if (newIndex > oldIndex) {
-                wrapperElem.insertBefore(targetThElem, oldThElem);
+                wrapperElem.insertBefore(targetThElem, oldThElem)
               } else {
                 wrapperElem.insertBefore(
                   targetThElem,
                   oldThElem ? oldThElem.nextElementSibling : oldThElem
-                );
+                )
               }
-              return;
+              return
             }
-            const currentRow = dynamicColumns.value.splice(oldIndex, 1)[0];
-            dynamicColumns.value.splice(newIndex, 0, currentRow);
-          }
-        });
-      });
-    };
+            const currentRow = dynamicColumns.value.splice(oldIndex, 1)[0]
+            dynamicColumns.value.splice(newIndex, 0, currentRow)
+          },
+        })
+      })
+    }
 
     const isFixedColumn = (label: string) => {
       return dynamicColumns.value.filter(item => item.label === label)[0].fixed
         ? true
-        : false;
-    };
+        : false
+    }
 
     const reference = {
       reference: () => (
@@ -206,8 +206,8 @@ export default defineComponent({
           class={["w-[16px]", iconClass.value]}
           onMouseover={e => (buttonRef.value = e.currentTarget)}
         />
-      )
-    };
+      ),
+    }
 
     return () => (
       <>
@@ -232,7 +232,9 @@ export default defineComponent({
                     <ExpandIcon
                       class={["w-[16px]", iconClass.value]}
                       style={{
-                        transform: isExpandAll.value ? "none" : "rotate(-90deg)"
+                        transform: isExpandAll.value
+                          ? "none"
+                          : "rotate(-90deg)",
                       }}
                       onClick={() => onExpand()}
                     />
@@ -245,7 +247,7 @@ export default defineComponent({
                   class={[
                     "w-[16px]",
                     iconClass.value,
-                    loading.value ? "animate-spin" : ""
+                    loading.value ? "animate-spin" : "",
                   ]}
                   onClick={() => onReFresh()}
                 />
@@ -296,10 +298,10 @@ export default defineComponent({
                                 "drag-btn w-[16px] mr-2",
                                 isFixedColumn(item)
                                   ? "!cursor-no-drop"
-                                  : "!cursor-grab"
+                                  : "!cursor-grab",
                               ]}
                               onMouseenter={(event: {
-                                preventDefault: () => void;
+                                preventDefault: () => void
                               }) => rowDrop(event)}
                             />
                             <el-checkbox
@@ -317,7 +319,7 @@ export default defineComponent({
                               </span>
                             </el-checkbox>
                           </div>
-                        );
+                        )
                       })}
                     </el-space>
                   </el-checkbox-group>
@@ -332,10 +334,10 @@ export default defineComponent({
                     name: "computeStyles",
                     options: {
                       adaptive: false,
-                      enabled: false
-                    }
-                  }
-                ]
+                      enabled: false,
+                    },
+                  },
+                ],
               }}
               placement="top"
               virtual-ref={buttonRef.value}
@@ -346,10 +348,10 @@ export default defineComponent({
           </div>
           {slots.default({
             size: size.value,
-            dynamicColumns: dynamicColumns.value
+            dynamicColumns: dynamicColumns.value,
           })}
         </div>
       </>
-    );
-  }
-});
+    )
+  },
+})

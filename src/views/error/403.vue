@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import noAccess from "@/assets/status/403.svg?component";
+import { useRouter } from "vue-router"
+import noAccess from "@/assets/status/403.svg?component"
 
 defineOptions({
-  name: "403"
-});
+  name: "403",
+})
 
-const router = useRouter();
+const router = useRouter()
 </script>
 
 <template>
@@ -18,14 +18,14 @@ const router = useRouter();
         v-motion
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 100
-          }
+            delay: 100,
+          },
         }"
       >
         403
@@ -35,14 +35,14 @@ const router = useRouter();
         v-motion
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 300
-          }
+            delay: 300,
+          },
         }"
       >
         抱歉，你无权访问该页面
@@ -53,14 +53,14 @@ const router = useRouter();
         v-motion
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 500
-          }
+            delay: 500,
+          },
         }"
       >
         返回首页

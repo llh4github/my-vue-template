@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import noExist from "@/assets/status/404.svg?component";
+import { useRouter } from "vue-router"
+import noExist from "@/assets/status/404.svg?component"
 
 defineOptions({
-  name: "404"
-});
+  name: "404",
+})
 
-const router = useRouter();
+const router = useRouter()
 </script>
 
 <template>
@@ -18,14 +18,14 @@ const router = useRouter();
         v-motion
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 100
-          }
+            delay: 100,
+          },
         }"
       >
         404
@@ -35,14 +35,14 @@ const router = useRouter();
         v-motion
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 300
-          }
+            delay: 300,
+          },
         }"
       >
         抱歉，你访问的页面不存在
@@ -53,14 +53,14 @@ const router = useRouter();
         v-motion
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 500
-          }
+            delay: 500,
+          },
         }"
       >
         返回首页

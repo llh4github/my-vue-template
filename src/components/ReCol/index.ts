@@ -1,5 +1,5 @@
-import { ElCol } from "element-plus";
-import { h, defineComponent } from "vue";
+import { ElCol } from "element-plus"
+import { h, defineComponent } from "vue"
 
 // 封装element-plus的el-col组件
 export default defineComponent({
@@ -7,12 +7,12 @@ export default defineComponent({
   props: {
     value: {
       type: Number,
-      default: 24
-    }
+      default: 24,
+    },
   },
   render() {
-    const attrs = this.$attrs;
-    const val = this.value;
+    const attrs = this.$attrs
+    const val = this.value
     return h(
       ElCol,
       {
@@ -21,9 +21,9 @@ export default defineComponent({
         md: val,
         lg: val,
         xl: val,
-        ...attrs
+        ...attrs,
       },
       { default: () => this.$slots.default() }
-    );
-  }
-});
+    )
+  },
+})
