@@ -1,7 +1,8 @@
 import Cookies from "js-cookie"
 import { storageSession } from "@pureadmin/utils"
 import { useUserStoreHook } from "@/store/modules/user"
-
+import { jwtDecode } from "jwt-decode"
+import { LoginResult } from "@/api/auth"
 export interface DataInfo<T> {
   /** token */
   accessToken: string
@@ -18,6 +19,27 @@ export interface DataInfo<T> {
 export const sessionKey = "user-info"
 export const TokenKey = "authorized-token"
 
+const tokenExpired = (token: string) => {
+  const decoded = jwtDecode(token)
+  return decoded.exp
+}
+export const setTokenForLogin = (tokeData: LoginResult) => {
+  const { accessToken, refreshToken, username } = tokeData
+  const expires = tokenExpired(accessToken)
+  const cookieString = JSON.stringify({ accessToken, expires })
+  expires > 0
+    ? Cookies.set(TokenKey, cookieString, {
+        expires: (expires - Date.now()) / 86400000,
+      })
+    : Cookies.set(TokenKey, cookieString)
+
+  useUserStoreHook().SET_USERNAME(username)
+  storageSession().setItem(sessionKey, {
+    refreshToken,
+    expires,
+    username,
+  })
+}
 /** 获取`token` */
 export function getToken(): DataInfo<number> {
   // 此处与`TokenKey`相同，此写法解决初始化时`Cookies`中不存在`TokenKey`报错

@@ -37,7 +37,7 @@ interface MessageParams {
  */
 const message = (
   message: string | VNode | (() => VNode),
-  params?: MessageParams
+  params?: MessageParams,
 ): MessageHandler => {
   if (!params) {
     return ElMessage({
@@ -50,7 +50,7 @@ const message = (
       type = "info",
       dangerouslyUseHTMLString = false,
       customClass = "antd",
-      duration = 2000,
+      duration = 3000,
       showClose = false,
       center = false,
       offset = 20,

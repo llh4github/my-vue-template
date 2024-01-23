@@ -73,7 +73,7 @@ class PureHttp {
           return config
         }
         /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
-        const whiteList = ["/refreshToken", "/login"]
+        const whiteList = ["/refreshToken", "/login", "/auth/login"]
         return whiteList.some(v => config.url.indexOf(v) > -1)
           ? config
           : new Promise(resolve => {
@@ -100,7 +100,7 @@ class PureHttp {
                   resolve(PureHttp.retryOriginalRequest(config))
                 } else {
                   config.headers["Authorization"] = formatToken(
-                    data.accessToken
+                    data.accessToken,
                   )
                   resolve(config)
                 }
@@ -150,7 +150,7 @@ class PureHttp {
     method: RequestMethods,
     url: string,
     param?: AxiosRequestConfig,
-    axiosConfig?: PureHttpRequestConfig
+    axiosConfig?: PureHttpRequestConfig,
   ): Promise<T> {
     const config = {
       method,
@@ -176,16 +176,31 @@ class PureHttp {
   public post<T, P>(
     url: string,
     params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
+    config?: PureHttpRequestConfig,
   ): Promise<P> {
     return this.request<P>("post", url, params, config)
   }
-
+  /** 单独抽离的post工具函数 */
+  public put<T, P>(
+    url: string,
+    params?: AxiosRequestConfig<T>,
+    config?: PureHttpRequestConfig,
+  ): Promise<P> {
+    return this.request<P>("put", url, params, config)
+  }
+  /** 单独抽离的post工具函数 */
+  public delete<T, P>(
+    url: string,
+    params?: AxiosRequestConfig<T>,
+    config?: PureHttpRequestConfig,
+  ): Promise<P> {
+    return this.request<P>("delete", url, params, config)
+  }
   /** 单独抽离的get工具函数 */
   public get<T, P>(
     url: string,
     params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
+    config?: PureHttpRequestConfig,
   ): Promise<P> {
     return this.request<P>("get", url, params, config)
   }

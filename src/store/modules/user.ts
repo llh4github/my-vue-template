@@ -7,7 +7,15 @@ import { storageSession } from "@pureadmin/utils"
 import { getLogin, refreshTokenApi } from "@/api/user"
 import { UserResult, RefreshTokenResult } from "@/api/user"
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags"
-import { type DataInfo, setToken, removeToken, sessionKey } from "@/utils/auth"
+import {
+  type DataInfo,
+  setToken,
+  removeToken,
+  sessionKey,
+  setTokenForLogin,
+} from "@/utils/auth"
+import { LoginResult, loginReq } from "@/api/auth"
+import { JsonWrapper } from "@/api/utils"
 
 export const useUserStore = defineStore({
   id: "pure-user",
@@ -29,13 +37,14 @@ export const useUserStore = defineStore({
     },
     /** 登入 */
     async loginByUsername(data) {
-      return new Promise<UserResult>((resolve, reject) => {
-        getLogin(data)
+      return new Promise<JsonWrapper<LoginResult>>((resolve, reject) => {
+        loginReq(data)
           .then(data => {
-            if (data) {
-              setToken(data.data)
-              resolve(data)
+            const rs = data.data
+            if (data.code === "OK") {
+              setTokenForLogin(rs)
             }
+            resolve(data)
           })
           .catch(error => {
             reject(error)
