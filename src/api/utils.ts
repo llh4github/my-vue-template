@@ -1,6 +1,6 @@
 import { http } from "@/utils/http"
-import { PureHttpRequestConfig, PureHttpResponse } from "@/utils/http/types"
-import { message, closeAllMessage } from "@/utils/message"
+import { PureHttpResponse } from "@/utils/http/types"
+import { message } from "@/utils/message"
 /**
  * 通用响应结构（JSON）
  */
