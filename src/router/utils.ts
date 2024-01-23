@@ -55,10 +55,10 @@ function ascending(arr: any[]) {
 /** 过滤meta中showLink为false的菜单 */
 function filterTree(data: RouteComponent[]) {
   const newTree = cloneDeep(data).filter(
-    (v: { meta: { showLink: boolean } }) => v.meta?.showLink !== false
+    (v: { meta: { showLink: boolean } }) => v.meta?.showLink !== false,
   )
   newTree.forEach(
-    (v: { children }) => v.children && (v.children = filterTree(v.children))
+    (v: { children }) => v.children && (v.children = filterTree(v.children)),
   )
   return newTree
 }
@@ -67,7 +67,7 @@ function filterTree(data: RouteComponent[]) {
 function filterChildrenTree(data: RouteComponent[]) {
   const newTree = cloneDeep(data).filter((v: any) => v?.children?.length !== 0)
   newTree.forEach(
-    (v: { children }) => v.children && (v.children = filterTree(v.children))
+    (v: { children }) => v.children && (v.children = filterTree(v.children)),
   )
   return newTree
 }
@@ -86,10 +86,10 @@ function filterNoPermissionTree(data: RouteComponent[]) {
   const currentRoles =
     storageSession().getItem<DataInfo<number>>(sessionKey)?.roles ?? []
   const newTree = cloneDeep(data).filter((v: any) =>
-    isOneOfArray(v.meta?.roles, currentRoles)
+    isOneOfArray(v.meta?.roles, currentRoles),
   )
   newTree.forEach(
-    (v: any) => v.children && (v.children = filterNoPermissionTree(v.children))
+    (v: any) => v.children && (v.children = filterNoPermissionTree(v.children)),
   )
   return filterChildrenTree(newTree)
 }
@@ -159,7 +159,7 @@ function handleAsyncRoutes(routeList) {
         // 防止重复添加路由
         if (
           router.options.routes[0].children.findIndex(
-            value => value.path === v.path
+            value => value.path === v.path,
           ) !== -1
         ) {
           return
@@ -174,7 +174,7 @@ function handleAsyncRoutes(routeList) {
             .find(n => n.path === "/")
           router.addRoute(flattenRouters)
         }
-      }
+      },
     )
     usePermissionStoreHook().handleWholeMenus(routeList)
   }
