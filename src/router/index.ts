@@ -46,12 +46,12 @@ Object.keys(modules).forEach(key => {
 
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
-  formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity))))
+  formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
 )
 
 /** 用于渲染菜单，保持原始层级 */
 export const constantMenus: Array<RouteComponent> = ascending(
-  routes.flat(Infinity)
+  routes.flat(Infinity),
 ).concat(...remainingRouter)
 
 /** 不参与菜单的路由 */
@@ -87,7 +87,7 @@ export function resetRouter() {
       router.removeRoute(name)
       router.options.routes = formatTwoStageRoutes(
         formatFlatteningRoutes(
-          buildHierarchyTree(ascending(routes.flat(Infinity)))
+          buildHierarchyTree(ascending(routes.flat(Infinity))),
         ),
       )
     }
@@ -151,7 +151,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
             const { path } = to
             const route = findRouteByPath(
               path,
-              router.options.routes[0].children
+              router.options.routes[0].children,
             )
             getTopMenu(true)
             // query、params模式路由传参数的标签页不在此处处理

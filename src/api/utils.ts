@@ -23,10 +23,57 @@ export interface JsonWrapper<T> {
    */
   success: boolean
 }
+/**
+ * 分页参数
+ */
+export interface PageQueryParam {
+  /**
+   * 页码
+   */
+  pageIndex: number
+  /**
+   * 页大小
+   */
+  pageSize: number
+}
+/**
+ * 数据创建者
+ */
+export interface CreatedByUser {
+  id: number
+  username: string
+}
+/**
+ * 数据更新者
+ */
+export interface UpdatedByUser {
+  id: number
+  username: string
+}
+/**
+ * 分页结果类
+ */
+export interface PageResult<T> {
+  /**
+   * 数据
+   */
+  records: T[]
+  /**
+   * 总页数
+   */
+  totalPage: number
+  /**
+   * 数据总量
+   */
+  totalRowCount: number
+}
 const baseUrl = (url: string) => {
   return "/api" + url
 }
 
+export function postPageQuery<T>(url: string, data?: any) {
+  return postReq<PageResult<T>>(url, data)
+}
 export function getReq<T>(url: string, params?: any) {
   return http.request<JsonWrapper<T>>("get", baseUrl(url), params, {
     beforeResponseCallback,
