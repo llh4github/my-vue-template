@@ -62,7 +62,7 @@ onMounted(() => {
         <el-button :icon="useRenderIcon(Refresh)"> 重置 </el-button>
       </el-form-item>
     </el-form>
-    <PureTableBar title="角色管理" :columns="columns" @refresh="queryDataFun">
+    <PureTableBar title="角色管理" :columns="columns()" @refresh="queryDataFun">
       <template v-slot="{ size, dynamicColumns }">
         <pure-table
           align-whole="center"

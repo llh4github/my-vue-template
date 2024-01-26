@@ -1,4 +1,5 @@
 import { JsonWrapper, PageResult } from "@/api/utils"
+import { auditFields } from "@/views/commons"
 import type { PaginationProps } from "@pureadmin/table"
 import { reactive, ref } from "vue"
 
@@ -38,23 +39,31 @@ export function useRole<T>(
       .then(resp => {
         if (resp.success) {
           dataList.value = resp.data.records
-          pagination.total = resp.data.totalPage
+          pagination.total = resp.data.totalRowCount
         }
       })
       .finally(() => (loading.value = false))
   }
-  const columns: TableColumnList = [
-    {
-      label: "角色名称",
-      prop: "title",
-      minWidth: 120,
-    },
-    {
-      label: "角色标识",
-      prop: "code",
-      minWidth: 150,
-    },
-  ]
+  const columns = () => {
+    const columns: TableColumnList = [
+      {
+        label: "角色名称",
+        prop: "title",
+        minWidth: 120,
+      },
+      {
+        label: "角色标识",
+        prop: "code",
+        minWidth: 150,
+      },
+      ...auditFields({
+        createUsername: false,
+        createdTime: true,
+      }),
+    ]
+    return columns
+  }
+
   return {
     columns,
     formRef,
