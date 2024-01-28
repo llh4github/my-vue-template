@@ -2,7 +2,9 @@ import {
   CreatedByUser,
   PageQueryParam,
   UpdatedByUser,
+  getReq,
   postPageQuery,
+  postReq,
 } from "./utils"
 
 /**
@@ -53,5 +55,9 @@ export const simplePageQuery = (data: RoleSimpleSpec) => {
 }
 
 export const addDataReq = (data: RoleAddInput) => {
-  return postPageQuery<RoleSimpleView>("/auth/role", data)
+  return postReq<RoleSimpleView>("/auth/role", data)
+}
+/** 检查角色代号是否存在 */
+export const checkCodeExist = (code: string, notId?: number) => {
+  return getReq<RoleSimpleView>("/auth/role/checkExist/code", { code, notId })
 }

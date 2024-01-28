@@ -81,6 +81,14 @@ export function useRole<T>(
       fullscreenIcon: true,
       contentRenderer: () => h(editForm, { ref: formRef }),
       beforeSure: (done, { options }) => {
+        const FormRef = formRef.value.getRef()
+        const curData = options.props.formInline
+        FormRef.validate(valid => {
+          if (valid) {
+            console.log("curData", curData)
+            done()
+          }
+        })
         console.log("form sure func ...")
       },
     })

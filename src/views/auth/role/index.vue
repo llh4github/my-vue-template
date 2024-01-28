@@ -65,7 +65,7 @@ onMounted(() => {
     </el-form>
     <PureTableBar title="角色管理" :columns="columns()" @refresh="queryDataFun">
       <template #buttons>
-        <el-button type="primary" @click="openDialog()">add role</el-button>
+        <el-button type="primary" @click="openDialog()">新增</el-button>
       </template>
       <template v-slot="{ size, dynamicColumns }">
         <pure-table
