@@ -16,5 +16,13 @@ export default {
         title: "角色管理",
       },
     },
+    {
+      path: "/auth/resource/url",
+      name: "resource-url",
+      component: () => import("@/views/auth/resource-url/index.vue"),
+      meta: {
+        title: "URL权限管理",
+      },
+    },
   ],
 } as RouteConfigsTable
