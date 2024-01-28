@@ -3,9 +3,9 @@ import { onMounted } from "vue"
 import Refresh from "@iconify-icons/ep/refresh"
 import Search from "@iconify-icons/ep/search"
 import { useRenderIcon } from "@/components/ReIcon/src/hooks"
-import { useRole } from "./hook.ts"
+import { useRole } from "./hook"
 import { PureTableBar } from "@/components/RePureTableBar"
-import { simplePageQuery } from "@/api/role.ts"
+import { simplePageQuery } from "@/api/role"
 defineOptions({
   name: "Role-Page",
 })
