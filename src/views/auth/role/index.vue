@@ -17,6 +17,7 @@ const {
   searchForm,
   queryDataFun,
   pagination,
+  openDialog,
   handleSizeChange,
   handleCurrentChange,
 } = useRole(simplePageQuery)
@@ -63,10 +64,13 @@ onMounted(() => {
       </el-form-item>
     </el-form>
     <PureTableBar title="角色管理" :columns="columns()" @refresh="queryDataFun">
+      <template #buttons>
+        <el-button type="primary" @click="openDialog()">add role</el-button>
+      </template>
       <template v-slot="{ size, dynamicColumns }">
         <pure-table
           align-whole="center"
-          showOverflowTooltip
+          showOverflowTooltiP
           table-layout="auto"
           :loading="loading"
           :size="size"

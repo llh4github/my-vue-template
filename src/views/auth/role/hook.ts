@@ -1,7 +1,10 @@
+import { reactive, ref, h } from "vue"
 import { JsonWrapper, PageResult } from "@/api/utils"
 import { auditFields } from "@/views/commons"
 import type { PaginationProps } from "@pureadmin/table"
-import { reactive, ref } from "vue"
+import { addDialog } from "@/components/ReDialog"
+import { RoleAddInput } from "@/api/role"
+import editForm from "./form.vue"
 
 export function useRole<T>(
   query: (data: any) => Promise<JsonWrapper<PageResult<T>>>,
@@ -63,6 +66,25 @@ export function useRole<T>(
     ]
     return columns
   }
+  const openDialog = (title = "新增", row?: RoleAddInput) => {
+    addDialog({
+      title: `${title}角色`,
+      props: {
+        formInline: {
+          name: row?.title ?? "",
+          code: row?.code ?? "",
+          // remark: row?.remark ?? "",
+        },
+      },
+      width: "30%",
+      draggable: true,
+      fullscreenIcon: true,
+      contentRenderer: () => h(editForm, { ref: formRef }),
+      beforeSure: (done, { options }) => {
+        console.log("form sure func ...")
+      },
+    })
+  }
 
   return {
     columns,
@@ -72,6 +94,7 @@ export function useRole<T>(
     searchForm,
     pagination,
     queryDataFun,
+    openDialog,
     handleSizeChange,
     handleCurrentChange,
   }
