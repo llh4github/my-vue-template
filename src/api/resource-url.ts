@@ -32,8 +32,8 @@ export interface UrlResourceSpec {
    * HTTP方法
    */
   method?: HttpMethod
-  page: PageQueryParam
   path?: string
+  page: PageQueryParam
 }
 export interface UrlResourceSimpleView {
   createdByUser?: CreatedByUser

@@ -1,3 +1,4 @@
+import { HttpMethod, UrlResourceSpec } from "@/api/resource-url"
 import { JsonWrapper, PageResult } from "@/api/utils"
 import { auditFields } from "@/views/commons"
 import type { PaginationProps } from "@pureadmin/table"
@@ -10,7 +11,8 @@ export function useResourceUrl<T>(
   const dataList = ref([])
   const loading = ref(true)
   const searchForm = reactive({
-    name: "",
+    path: "",
+    method: null,
   })
   const pagination = reactive<PaginationProps>({
     total: 0,
@@ -29,6 +31,7 @@ export function useResourceUrl<T>(
   const queryDataFun = async () => {
     const param = {
       ...searchForm,
+
       page: {
         pageIndex: pagination.currentPage,
         pageSize: pagination.pageSize,
@@ -45,6 +48,16 @@ export function useResourceUrl<T>(
   }
   const columns = () => {
     const columns: TableColumnList = [
+      {
+        label: "路径",
+        prop: "path",
+        minWidth: 150,
+      },
+      {
+        label: "请求方法",
+        prop: "method",
+        minWidth: 50,
+      },
       ...auditFields({
         createdTime: true,
       }),
