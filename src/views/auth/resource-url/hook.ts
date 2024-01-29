@@ -3,7 +3,7 @@ import { auditFields } from "@/views/commons"
 import type { PaginationProps } from "@pureadmin/table"
 import { reactive, ref } from "vue"
 
-export function userResourceUrl<T>(
+export function useResourceUrl<T>(
   query: (data: any) => Promise<JsonWrapper<PageResult<T>>>,
 ) {
   const formRef = ref()
@@ -51,11 +51,13 @@ export function userResourceUrl<T>(
     ]
     return columns
   }
+  const openDialog = (title = "新增", row?: any) => {}
   return {
     columns,
     formRef,
     dataList,
     loading,
+    openDialog,
     searchForm,
     pagination,
     queryDataFun,
