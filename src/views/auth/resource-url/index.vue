@@ -2,6 +2,7 @@
 import { onMounted } from "vue"
 import Refresh from "@iconify-icons/ep/refresh"
 import Search from "@iconify-icons/ep/search"
+import EditPen from "@iconify-icons/ep/edit-pen"
 import { useRenderIcon } from "@/components/ReIcon/src/hooks"
 import { PureTableBar } from "@/components/RePureTableBar"
 import { simplePageQuery, HttpMethod } from "@/api/resource-url"
@@ -98,7 +99,21 @@ onMounted(() => {
           }"
           @page-size-change="handleSizeChange"
           @page-current-change="handleCurrentChange"
-      /></template>
+        >
+          <template #operation="{ row }">
+            <el-button
+              class="reset-margin"
+              link
+              type="primary"
+              :size="size"
+              :icon="useRenderIcon(EditPen)"
+              @click="openDialog('修改', row)"
+            >
+              修改
+            </el-button>
+          </template>
+        </pure-table>
+      </template>
     </PureTableBar>
   </div>
 </template>

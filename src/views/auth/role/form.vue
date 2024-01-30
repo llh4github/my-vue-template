@@ -15,8 +15,8 @@ const props = withDefaults(defineProps<FormProps>(), {
     menuResourceIds: [],
   }),
 })
-const ruleFormRef = ref()
 const newFormInline = ref(props.formInline)
+const ruleFormRef = ref()
 function getRef() {
   return ruleFormRef.value
 }

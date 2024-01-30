@@ -4,6 +4,7 @@ import {
   UpdatedByUser,
   postPageQuery,
   postReq,
+  putReq,
 } from "./utils"
 
 /**
@@ -53,9 +54,25 @@ export interface UrlResourceSimpleView {
    */
   updatedTime?: Date
 }
+/**
+ * UrlResourceUpdateInput
+ */
+export interface UrlResourceUpdateInput {
+  id: number
+  /**
+   * 请求方法
+   */
+  method: HttpMethod
+  path: string
+}
+
 /** 添加数据 */
 export function addData(data: UrlResourceAddInput) {
   return postReq<any>("/auth/resource/url", data)
+}
+/** 更新数据 */
+export function updateData(data: UrlResourceUpdateInput) {
+  return putReq<any>("/auth/resource/url", data)
 }
 /** 分页查询 */
 export function simplePageQuery(data: UrlResourceSpec) {

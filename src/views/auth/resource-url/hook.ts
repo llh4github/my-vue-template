@@ -1,8 +1,11 @@
-import { HttpMethod, UrlResourceSpec } from "@/api/resource-url"
+import { reactive, ref, h } from "vue"
+import { UrlResourceSimpleView, addData, updateData } from "@/api/resource-url"
 import { JsonWrapper, PageResult } from "@/api/utils"
+import { addDialog } from "@/components/ReDialog"
 import { auditFields } from "@/views/commons"
 import type { PaginationProps } from "@pureadmin/table"
-import { reactive, ref } from "vue"
+import editForm from "./form.vue"
+import { successMsg } from "@/utils/message"
 
 export function useResourceUrl<T>(
   query: (data: any) => Promise<JsonWrapper<PageResult<T>>>,
@@ -59,12 +62,56 @@ export function useResourceUrl<T>(
         minWidth: 50,
       },
       ...auditFields({
-        createdTime: true,
+        updatedTime: true,
       }),
+      {
+        label: "操作",
+        fixed: "right",
+        width: 240,
+        slot: "operation",
+      },
     ]
     return columns
   }
-  const openDialog = (title = "新增", row?: any) => {}
+  const openDialog = (title = "新增", row?: UrlResourceSimpleView) => {
+    addDialog({
+      title: `${title}URL资源`,
+      props: {
+        formInline: {
+          id: row?.id ?? null,
+          path: row?.path ?? "",
+          method: row?.method ?? undefined,
+        },
+      },
+      width: "30%",
+      draggable: true,
+      fullscreenIcon: true,
+      contentRenderer: () => h(editForm, { ref: formRef }),
+      beforeSure: (done, { options }) => {
+        const FormRef = formRef.value.getRef()
+        const curData = options.props.formInline
+        FormRef.validate(valid => {
+          if (valid) {
+            addOrUpdate(curData).then(resp => {
+              if (resp.success) {
+                successMsg()
+                queryDataFun()
+                done()
+              }
+            })
+          }
+        })
+      },
+    })
+  }
+  function addOrUpdate(data: any) {
+    if ("id" in data && data.id) {
+      return updateData(data)
+    } else {
+      return addData(data)
+    }
+  }
+
   return {
     columns,
     formRef,

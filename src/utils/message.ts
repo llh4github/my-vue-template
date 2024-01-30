@@ -82,4 +82,5 @@ const message = (
  */
 const closeAllMessage = (): void => ElMessage.closeAll()
 
-export { message, closeAllMessage }
+const successMsg = (msg = "操作成功") => message(msg)
+export { message, closeAllMessage, successMsg }
